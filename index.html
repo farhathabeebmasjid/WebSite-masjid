@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mosque Website</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="main.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<header class="bg-green-800 text-white text-center p-6 text-3xl font-bold">
+Masjid Website
+</header>
+
+<section class="p-6">
+<h2 class="text-2xl text-green-700 font-bold text-center mb-4">Daily Prayer Times</h2>
+<div class="max-w-md mx-auto bg-white p-4 rounded shadow space-y-2">
+<p>Fajr: <span id="fajr"></span></p>
+<p>Sunrise: <span id="sunrise"></span></p>
+<p>Dhuhr: <span id="dhuhr"></span></p>
+<p>Asr: <span id="asr"></span></p>
+<p>Maghrib: <span id="maghrib"></span></p>
+<p>Sunset: <span id="sunset"></span></p>
+<p>Isha: <span id="isha"></span></p>
+</div>
+</section>
+
+<section class="p-6">
+<h2 class="text-2xl text-green-700 font-bold text-center mb-4">Weekly Timetable</h2>
+<table class="table-auto mx-auto bg-white rounded shadow" id="weeklyTable">
+<thead class="bg-green-700 text-white">
+<tr>
+<th class="p-2">Date</th>
+<th class="p-2">Fajr</th>
+<th class="p-2">Sunrise</th>
+<th class="p-2">Dhuhr</th>
+<th class="p-2">Asr</th>
+<th class="p-2">Maghrib</th>
+<th class="p-2">Sunset</th>
+<th class="p-2">Isha</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</section>
+
+<section class="p-6">
+<h2 class="text-2xl text-green-700 font-bold text-center mb-4">Monthly Timetable</h2>
+<table class="table-auto mx-auto bg-white rounded shadow" id="monthlyTable">
+<thead class="bg-green-700 text-white">
+<tr>
+<th class="p-2">Date</th>
+<th class="p-2">Fajr</th>
+<th class="p-2">Sunrise</th>
+<th class="p-2">Dhuhr</th>
+<th class="p-2">Asr</th>
+<th class="p-2">Maghrib</th>
+<th class="p-2">Sunset</th>
+<th class="p-2">Isha</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</section>
+
+<section class="p-6">
+<h2 class="text-2xl text-green-700 font-bold text-center mb-4">Events & Announcements</h2>
+<div id="events" class="max-w-xl mx-auto bg-white p-4 rounded shadow space-y-2"></div>
+</section>
+
+<section class="p-6">
+<h2 class="text-2xl text-green-700 font-bold text-center mb-4">Jumu’ah Khutbah Schedule</h2>
+<div id="jumuah" class="max-w-xl mx-auto bg-white p-4 rounded shadow space-y-2"></div>
+</section>
+
+</body>
+</html>
