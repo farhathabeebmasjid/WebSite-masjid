@@ -1,77 +1,31 @@
-navigator.geolocation.getCurrentPosition(pos => {
-const lat = pos.coords.latitude;
-const lon = pos.coords.longitude;
 
-// Daily timings
-fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=2`)
+fetch("assets/data/settings.json").then(r=>r.json()).then(s=>{
+mosqueName.textContent=s.mosqueName;
+address.textContent=s.address;
+
+const ramadan=new Date(s.ramadanStart);
+setInterval(()=>{
+countdown.textContent=Math.max(0,Math.ceil((ramadan-new Date())/86400000))+" days remaining";
+},1000);
+
+fetch(`https://api.aladhan.com/v1/timingsByCity?city=${s.city}&country=${s.country}&method=2`)
 .then(r=>r.json()).then(d=>{
 const t=d.data.timings;
-fajr.innerText=t.Fajr;
-sunrise.innerText=t.Sunrise;
-dhuhr.innerText=t.Dhuhr;
-asr.innerText=t.Asr;
-maghrib.innerText=t.Maghrib;
-sunset.innerText=t.Sunset;
-isha.innerText=t.Isha;
+["Fajr","Dhuhr","Asr","Maghrib","Isha"].forEach(p=>{
+prayers.innerHTML+=`<div class="bg-white p-3 rounded shadow"><b>${p}</b><br>Adhan: ${t[p]}</div>`;
 });
+sunrise.textContent=t.Sunrise;
+sunset.textContent=t.Sunset;
+hijri.textContent=d.data.date.hijri.date;
 
-// Weekly
-for(let i=0;i<7;i++){
-let date=new Date(); date.setDate(date.getDate()+i);
-let ds=date.toISOString().split('T')[0];
-fetch(`https://api.aladhan.com/v1/timings/${ds}?latitude=${lat}&longitude=${lon}&method=2`)
-.then(r=>r.json()).then(d=>{
-let t=d.data.timings;
-weeklyTable.querySelector("tbody").innerHTML+=
-`<tr>
-<td class="p-2">${ds}</td>
-<td class="p-2">${t.Fajr}</td>
-<td class="p-2">${t.Sunrise}</td>
-<td class="p-2">${t.Dhuhr}</td>
-<td class="p-2">${t.Asr}</td>
-<td class="p-2">${t.Maghrib}</td>
-<td class="p-2">${t.Sunset}</td>
-<td class="p-2">${t.Isha}</td>
-</tr>`;
-});
-}
-
-// Monthly
-const now=new Date();
-fetch(`https://api.aladhan.com/v1/calendar/${now.getFullYear()}/${now.getMonth()+1}?latitude=${lat}&longitude=${lon}&method=2`)
-.then(r=>r.json()).then(data=>{
-data.data.forEach(day=>{
-let t=day.timings;
-monthlyTable.querySelector("tbody").innerHTML+=
-`<tr>
-<td class="p-2">${day.date.gregorian.date}</td>
-<td class="p-2">${t.Fajr}</td>
-<td class="p-2">${t.Sunrise}</td>
-<td class="p-2">${t.Dhuhr}</td>
-<td class="p-2">${t.Asr}</td>
-<td class="p-2">${t.Maghrib}</td>
-<td class="p-2">${t.Sunset}</td>
-<td class="p-2">${t.Isha}</td>
-</tr>`;
-});
+extra.innerHTML=`
+<div>Tahajjud: Night</div>
+<div>Ishraq: ${t.Sunrise}</div>
+<div>Chasht: 10:00 AM</div>
+<div>Tasbih: Anytime</div>
+<div>Witr: After Isha (${t.Isha})</div>`;
 });
 });
 
-// Events
-const events=[
-{title:"Qur'an Study Circle",info:"Every Saturday 6:00 PM"},
-{title:"Kids Islamic Class",info:"Sunday 10:00 AM"},
-{title:"Community Iftar",info:"First Friday of Month"}
-];
-events.forEach(e=>{
-document.getElementById("events").innerHTML+=`<p><strong>${e.title}</strong> – ${e.info}</p>`;
-});
-
-// Jumu’ah
-const khutbah=[
-{imam:"Imam Abdullah",time:"1:30 PM"},
-{imam:"Imam Kareem",time:"2:30 PM"}
-];
-khutbah.forEach(j=>{
-document.getElementById("jumuah").innerHTML+=`<p><strong>${j.imam}</strong> – ${j.time}</p>`;
-});
+fetch("https://api.alquran.cloud/v1/ayah/262/ar.alafasy").then(r=>r.json()).then(v=>verseAr.textContent=v.data.text);
+fetch("https://api.alquran.cloud/v1/ayah/262/en.asad").then(r=>r.json()).then(v=>verseEn.textContent=v.data.text);
