@@ -1,0 +1,12 @@
+[
+  {
+    "title": "Friday Khutbah",
+    "day": "Friday",
+    "auto": true
+  },
+  {
+    "title": "Quran Class",
+    "day": "Saturday",
+    "time": "6:00 PM"
+  }
+]
